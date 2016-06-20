@@ -34,7 +34,8 @@ System.register(['angular2/core', 'rxjs/Rx'], function(exports_1, context_1) {
                         return Rx_1.Observable.fromPromise(promise); // promise is done. json get from server and push it to Observable.
                     }); // Transforming input 
                     // Use flatMap merge many Observable to one. 
-                    keyups.subscribe(function (data) { return console.log(data); });
+                    var subscribe = keyups.subscribe(function (data) { return console.log(data); });
+                    subscribe.unsubscribe(); // Help in real word app to user turn off multiple notifications.       
                     // var debounced =  _.debounce(function(text){
                     //     var url = "https://api.spotify.com/v1/search?type=artist&q="+text;
                     //     $.getJSON(url, function(artists){
