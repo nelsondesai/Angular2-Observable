@@ -11,16 +11,17 @@ import {Observable} from 'rxjs/Rx';
 export class AppComponent {
     constructor(){
         var keyups = Observable.fromEvent($('#search'),"keyup")
-        .map( e => e.target.value)
-        .filter( text => text.length >= 3)
-        .debounceTime(400)
-        .distinctUntilChanged()
+        .map( e => e.target.value) // transform elements to different object.
+        .filter( text => text.length >= 3) // filter or conditions
+        .debounceTime(400) // pause time for avoid not call more times. wait 400s.
+        .distinctUntilChanged() // same input not call. if left and right arrow press.
         .flatMap( searchTerm =>
         {
            var url = "https://api.spotify.com/v1/search?type=artist&q="+searchTerm;
            var promise = $.getJSON(url);
-           return Observable.fromPromise(promise);
-        });        
+           return Observable.fromPromise(promise); // promise is done. json get from server and push it to Observable.
+        }); // Transforming input 
+        // Use flatMap merge many Observable to one. 
         keyups.subscribe( data => console.log(data));
         
         // var debounced =  _.debounce(function(text){
